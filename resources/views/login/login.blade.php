@@ -111,7 +111,7 @@ a.socialIcon:hover,
         <form class="login-form" method="POST" action="{{route('postlogin')}}">
           @csrf
   <div class="form-group">
-    <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+    <label for="exampleInputEmail1" class="text-uppercase">Email</label>
     <input type="text" class="form-control" placeholder="" name="email" required>
     
   </div>

@@ -5,10 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use App\Traits\storageImageTrait;
+use App\Components\Recusive;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\File;
+use Illuminate\Support\Str;
+use Illuminate\Support\arr;
+use Log;
+
+
+
+
 class LoginController extends Controller
 {
+    use storageImageTrait;
     public function login()
     {
       if (auth()->check()) {
@@ -42,13 +53,20 @@ class LoginController extends Controller
   	if ($request->password1===$request->password2) {
   	try {
             DB::beginTransaction();
-            
-            	$user=User::create([
+            	$dataCreate=[
                 'name'=>$request->name,
                 'email'=>$request->email,
                 'password'=>Hash::make($request->password1),
-            ]);
-            
+                     ];
+
+                $dataUploadFeatureImage=$this->storageTraitUpload($request,fieldName:'image_user',foderName:'post');
+                if (!empty($dataUploadFeatureImage)) {
+                  $dataCreate['image_name']=$dataUploadFeatureImage['file_name'];
+                    $dataCreate['image_user']=$dataUploadFeatureImage['file_path'];
+        
+                }
+
+                $user=User::create($dataCreate);            
             
             DB::commit();
             return redirect()->route('login');

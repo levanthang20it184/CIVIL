@@ -47,10 +47,14 @@ padding : 50px 0;
   <div class="row">
     <div class="col-md-4 login-sec">
         <h2 class="text-center">Sign up</h2>
-        <form class="login-form" method="post" action="{{route('postregister')}}" >
+        <form class="login-form" method="post" action="{{route('postregister')}}" enctype="multipart/form-data" >
           @csrf
+          <div class="form-group">
+                        <label >Select Image User</label>
+                        <input type="file" class="form-control-file" placeholder="Image" name="image_user">
+          </div>
   <div class="form-group">
-    <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+    <label for="exampleInputEmail1" class="text-uppercase">First and last name</label>
     <input type="text" class="form-control" placeholder="" value="{{old('name')}}"name="name" required>
   </div>
   <div class="form-group">
@@ -63,7 +67,7 @@ padding : 50px 0;
   </div>
   
   <div class="form-group">
-    <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+    <label for="exampleInputPassword1" class="text-uppercase">Re-enter password</label>
     <input type="password" class="form-control" placeholder="" name="password2"required>
   </div>
 
